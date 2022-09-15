@@ -9,6 +9,14 @@ public class UserExpenseDetailsDto {
     private double balanceAmount;
     private String isAdmin;
 
+    public String getMobileNo() {
+        return mobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
+    }
+
     public String getUserName() {
         return userName;
     }

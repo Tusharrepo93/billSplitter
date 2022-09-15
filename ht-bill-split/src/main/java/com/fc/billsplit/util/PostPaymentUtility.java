@@ -2,6 +2,7 @@ package com.fc.billsplit.util;
 
 import com.fc.billsplit.dto.GroupDetailsDto;
 import com.fc.billsplit.dto.UserExpenseDetailsDto;
+import com.fc.billsplit.model.ExpenseTxnHistory;
 import com.fc.billsplit.model.GroupExpense;
 import com.fc.billsplit.model.UserGroup;
 import org.springframework.stereotype.Component;
@@ -31,5 +32,25 @@ public class PostPaymentUtility {
     groupDetailsDto.setUserExpenseDetailsDto(userExpenseDetailsDtos);
 
     return groupDetailsDto;
+  }
+
+  public static void convertDtoEntityGroupExpense(
+      UserExpenseDetailsDto userExpenseDetailsDto, GroupExpense groupExpense) {
+      groupExpense.setAmount(groupExpense.getAmount()-userExpenseDetailsDto.getBalanceAmount());
+  }
+
+  public static List<ExpenseTxnHistory> convertDtoEntityExpenseTxn(
+      List<UserExpenseDetailsDto> userExpenseDetailsDto, UserGroup userGroup, String mobNo) {
+    List<ExpenseTxnHistory> lst = new ArrayList<>();
+
+    for (int i = 0; i < userExpenseDetailsDto.size(); i++) {
+      ExpenseTxnHistory expenseTxnHistory = new ExpenseTxnHistory();
+      expenseTxnHistory.setAmount(userExpenseDetailsDto.get(i).getBalanceAmount());
+      expenseTxnHistory.setMobile_no(userExpenseDetailsDto.get(i).getMobileNo());
+      expenseTxnHistory.setAmount(userExpenseDetailsDto.get(i).getBalanceAmount());
+      expenseTxnHistory.setUpdated_by_mob_no(mobNo);
+      lst.add(expenseTxnHistory);
+    }
+    return lst;
   }
 }
